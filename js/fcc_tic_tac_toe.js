@@ -16,9 +16,17 @@ function chooseYourWeapon(selected) {
     if(selected == "X"){
         playerChoice = "X";
         compChoice = "O";
+        console.log(selected);
+        console.log(playerChoice);
+        console.log(compChoice);
+
     }else{
         playerChoice = "O";
         compChoice = "X";
+        console.log(selected);
+        console.log(playerChoice);
+        console.log(compChoice);
+
     }
 }
 
@@ -35,8 +43,41 @@ function humanInput(square) {
     }
 }
 
+function compInput(square){
+    //make sure it is a legal move and execute it
+    if (compMoves[square] === 0 && humanMoves[square] === 0) {
+        compMoves[square] = 1;
+        var thisSquare = "square " + square;
+        document.getElementById(thisSquare).innerHTML = compChoice;
+        checkWin(compMoves);
+    }else{
+        console.log("computer made illegal move");
+    }
+}
+
 //calculate computer's move based on available squares and execute it
 function compMove() {
+    if (humanMoves[4] === 0 && compMoves[4] === 0){
+        compInput(4);
+    }
+
+}
+
+function evaluateRow(first, second, third){
+    var arrayToEval = [[humanMoves[first], humanMoves[second], humanMoves[third]], [compMoves[first], compMoves[secons], compMoves[third]]],
+        evaluated = [arrayToEval[0].reduce(add, 0), arrayToEval[1].reduce(add, 0)];
+
+    function add(a, b){
+        return a + b;
+    }
+
+    if (evaluated === [0, 2]){
+        return [3, arrayToEval[1].indexOf(0)];
+    }
+    else if (evaluated === [2, 0]){
+        return [2, arrayToEval[0].indexOf(0)];
+    }
+
 
 }
 
@@ -96,5 +137,8 @@ function checkWin(movesArray) {
 
 // reset the game on winning. Reload page? Reload just the game window?
 function resetGame() {
-
+    function reload(){
+        location.reload()
+    }
+    setTimeout(reload, 1000);
 }
