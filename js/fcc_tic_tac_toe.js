@@ -13,20 +13,12 @@ var playerChoice,
     winBackground = "red";
 // the main game function. Choice is X or O from an onclick event to start.
 function chooseYourWeapon(selected) {
-    if(selected == "X"){
+    if (selected == "X") {
         playerChoice = "X";
         compChoice = "O";
-        console.log(selected);
-        console.log(playerChoice);
-        console.log(compChoice);
-
-    }else{
+    } else {
         playerChoice = "O";
         compChoice = "X";
-        console.log(selected);
-        console.log(playerChoice);
-        console.log(compChoice);
-
     }
 }
 
@@ -43,40 +35,106 @@ function humanInput(square) {
     }
 }
 
-function compInput(square){
+function compInput(square) {
     //make sure it is a legal move and execute it
     if (compMoves[square] === 0 && humanMoves[square] === 0) {
         compMoves[square] = 1;
         var thisSquare = "square " + square;
         document.getElementById(thisSquare).innerHTML = compChoice;
         checkWin(compMoves);
-    }else{
+    } else {
         console.log("computer made illegal move");
     }
 }
 
 //calculate computer's move based on available squares and execute it
 function compMove() {
-    if (humanMoves[4] === 0 && compMoves[4] === 0){
-        compInput(4);
+
+    var potentialMovesArr = steamrollArray([
+        evaluateRow(0, 1, 2),
+        evaluateRow(3, 4, 5),
+        evaluateRow(6, 7, 8),
+        evaluateRow(0, 3, 6),
+        evaluateRow(1, 4, 7),
+        evaluateRow(2, 5, 8),
+        evaluateRow(0, 4, 8),
+        evaluateRow(2, 4, 6)
+    ]);
+
+    console.log("potential moves = " + potentialMovesArr);
+    function steamrollArray(arr) {
+        // I'm a steamroller, baby
+        var newArr = [];
+
+        function flatten(arr) {
+            for (var i = 0; i < arr.length; i++) {
+                if (Array.isArray(arr[i]) === true) {
+                    flatten(arr[i]);
+                } else {
+                    newArr.push(arr[i]);
+                }
+            }
+
+        }
+
+        flatten(arr);
+        return newArr;
     }
+
+    function sortFunction(a, b) {
+        if (a[0] === b[0]) {
+            return 0;
+        }
+        else {
+            return (a[0] < b[0]) ? -1 : 1;
+        }
+    }
+
+    potentialMovesArr.sort(sortFunction);
+    compInput(potentialMovesArr[0][1]);
 
 }
 
-function evaluateRow(first, second, third){
-    var arrayToEval = [[humanMoves[first], humanMoves[second], humanMoves[third]], [compMoves[first], compMoves[secons], compMoves[third]]],
-        evaluated = [arrayToEval[0].reduce(add, 0), arrayToEval[1].reduce(add, 0)];
-
-    function add(a, b){
+function evaluateRow(first, second, third) {
+    var arrayToEval = [[humanMoves[first], humanMoves[second], humanMoves[third]], [compMoves[first], compMoves[second], compMoves[third]]],
+        evaluated = [arrayToEval[0].reduce(add, 0), arrayToEval[1].reduce(add, 0)],
+        evaluatedArr = [];
+console.log("evaluate row fired");
+    console.log("array to eval = " + arrayToEval);
+    console.log("evaluated = " + evaluated);
+    function add(a, b) {
         return a + b;
     }
 
-    if (evaluated === [0, 2]){
-        return [3, arrayToEval[1].indexOf(0)];
+    if (evaluated == [0, 2]) {
+        evaluatedArr.push([5, arrayToEval[1].indexOf(0)]);
+        console.log("if for [0, 2] fired pushing" + arrayToEval[1].indexOf(0));
     }
-    else if (evaluated === [2, 0]){
-        return [2, arrayToEval[0].indexOf(0)];
+    else if (evaluated == [2, 0]) {
+        evaluatedArr.push([4, arrayToEval[0].indexOf(0)]);
+        console.log("if for [2, 0] fired pushing" + arrayToEval[0].indexOf(0));
     }
+    else if (evaluated == [0, 1]) {
+        evaluatedArr.push([3, arrayToEval[1].indexOf(0)], [1, arrayToEval[1].lastIndexOf(0)]);
+        console.log("if for [0, 1] fired pushing" + [3, arrayToEval[1].indexOf(0)], [1, arrayToEval[1].lastIndexOf(0)]);
+    }
+    else if (evaluated == [0, 0]) {
+        evaluatedArr.push([2, second]);
+        console.log("if for [0, 0] fired pushing" + [2, second]);
+    }
+    else if (evaluated == [1, 0]) {
+        evaluatedArr.push([1, arrayToEval[1].indexOf(0)], [1, arrayToEval[1].lastIndexOf(0)]);
+        console.log("if for [1, 0] fired pushing" + [1, arrayToEval[1].indexOf(0)], [1, arrayToEval[1].lastIndexOf(0)]);
+    }
+    else if (evaluated == [1, 1]) {
+        evaluatedArr.push([0, arrayToEval[1].indexOf(0)]);
+        console.log("if for [1, 1] fired pushing" + arrayToEval[1].indexOf(0));
+    }
+    else{
+        console.log("no ifs fired");
+    }
+    console.log("evaluatedArr = " + evaluatedArr);
+    return evaluatedArr;
 
 
 }
@@ -137,8 +195,9 @@ function checkWin(movesArray) {
 
 // reset the game on winning. Reload page? Reload just the game window?
 function resetGame() {
-    function reload(){
+    function reload() {
         location.reload()
     }
+
     setTimeout(reload, 1000);
 }
