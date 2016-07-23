@@ -3,8 +3,6 @@
  */
 // build a tic tac toe game
 //TODO I can play a game of tic tac toe with the computer
-//TODO MY game resets when it is over so I can play again
-//TODO I can choose whether to play as X or O
 
 var playerChoice,
     compChoice,
@@ -100,6 +98,7 @@ function compMove() {
         console.log("evaluate row fired");
         console.log("array to eval = " + arrayToEval);
         console.log("evaluated = " + evaluated);
+        console.log("compSquares = " + compSquares + " humanSquares = " + humanSquares);
         function add(a, b) {
             return a + b;
         }
@@ -125,10 +124,12 @@ function compMove() {
         }
         else if (evaluated[0] === 1 && evaluated[1] === 0) {
             console.log("1,0 fired");
-            moveIndex = [arrayToEval[0].indexOf(0), arrayToEval[0].lastIndexOf(0)];
-            console.log(moveIndex);
-            potentialMovesArr.push([1, compSquares[moveIndex][0], [1, compSquares[moveIndex][1]]]);
-            console.log("if for [1, 0] fired pushing" + [1, compSquares[moveIndex][0], [1, compSquares[moveIndex][1]]]);
+            moveIndex = [arrayToEval[0].indexOf(0)], arrayToEval[0].lastIndexOf(0)];
+            console.log("moveIndex = " + moveIndex);
+            console.log("move index 0 = " + moveIndex[0] + "move index 1 = " + moveIndex[1]);
+           // potentialMovesArr.push([1, compSquares[moveIndex][0], [1, compSquares[moveIndex][1]]]);
+            console.log("compSquares[moveIndex][0] = " + compSquares[moveIndex][0]);
+            console.log("if for [1, 0] fired pushing" + [1, compSquares.moveIndex[0]]);
         }
         else if (evaluated[0] === 1 && evaluated[1] === 1) {
             moveIndex = arrayToEval[1].indexOf(0);
