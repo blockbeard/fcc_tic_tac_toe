@@ -46,6 +46,10 @@ function compInput(square) {
     }
 }
 
+function add(a, b) {
+    return a + b;
+}
+
 //calculate computer's move based on available squares and execute it
 function compMove() {
 
@@ -89,34 +93,34 @@ function compMove() {
         }
     }
 
+
+
     function evaluateRow(first, second, third) {
         var arrayToEval = [[humanMoves[first], humanMoves[second],  humanMoves[third]], [compMoves[first], compMoves[second], compMoves[third]]],
             evaluated = [arrayToEval[0].reduce(add, 0), arrayToEval[1].reduce(add, 0)],
-            humanSquares = [humanMoves[first], humanMoves[second], humanMoves[third]],
-            compSquares = [compMoves[first], compMoves[second], compMoves[third]],
+            squares = [first, second, third],
+            allMoves = [compMoves[first] + humanMoves[first], compMoves[second] + humanMoves[second], compMoves[third] + humanMoves[third]],
             moveIndex;
-        console.log("evaluate row fired");
+        console.log("Squares = " + first + second + third);
         console.log("array to eval = " + arrayToEval);
         console.log("evaluated = " + evaluated);
-        console.log("compSquares = " + compSquares + " humanSquares = " + humanSquares);
-        function add(a, b) {
-            return a + b;
-        }
+        console.log("squares = " + squares + " squares = " + squares);
+
 
         if (evaluated[0] === 0 && evaluated[1] === 2) {
-            moveIndex = arrayToEval[1].indexOf(0);
-            potentialMovesArr.push([5, compSquares[moveIndex]]);
-            console.log("if for [0, 2] fired pushing" + [5, compSquares[moveIndex]]);
+            moveIndex = allMoves.indexOf(0);
+            potentialMovesArr.push([5, squares[moveIndex]]);
+            console.log("if for [0, 2] fired pushing" + [5, squares[moveIndex]]);
         }
         else if (evaluated[0] === 2 && evaluated[1] === 0) {
-            moveIndex = arrayToEval[0].indexOf(0);
-            potentialMovesArr.push([4, humanSquares[moveIndex]]);
-            console.log("if for [2, 0] fired pushing" + [4, humanSquares[moveIndex]]);
+            moveIndex = allMoves.indexOf(0);
+            potentialMovesArr.push([4, squares[moveIndex]]);
+            console.log("if for [2, 0] fired pushing" + [4, squares[moveIndex]]);
         }
         else if (evaluated[0] === 0 && evaluated[1] === 1) {
-            moveIndex = [[arrayToEval[1].indexOf(0)], [3, arrayToEval[1].lastIndexOf(0)]];
-            potentialMovesArr.push([3, compSquares[moveIndex][0]], [3, compSquares[moveIndex][1]]);
-            console.log("if for [0, 1] fired pushing" + [3, compSquares[moveIndex][0]], [3, compSquares[moveIndex][1]]);
+            moveIndex = [allMoves.indexOf(0)];
+            potentialMovesArr.push([3, squares[moveIndex]]);
+            console.log("if for [0, 1] fired pushing" + [3, squares[moveIndex]]);
         }
         else if (evaluated[0] === 0 && evaluated[1] === 0) {
             potentialMovesArr.push([2, second]);
@@ -124,17 +128,16 @@ function compMove() {
         }
         else if (evaluated[0] === 1 && evaluated[1] === 0) {
             console.log("1,0 fired");
-            moveIndex = [arrayToEval[0].indexOf(0)], arrayToEval[0].lastIndexOf(0)];
+            moveIndex = [allMoves.indexOf(0)];
             console.log("moveIndex = " + moveIndex);
-            console.log("move index 0 = " + moveIndex[0] + "move index 1 = " + moveIndex[1]);
-           // potentialMovesArr.push([1, compSquares[moveIndex][0], [1, compSquares[moveIndex][1]]]);
-            console.log("compSquares[moveIndex][0] = " + compSquares[moveIndex][0]);
-            console.log("if for [1, 0] fired pushing" + [1, compSquares.moveIndex[0]]);
+            potentialMovesArr.push([1, squares[moveIndex]]);
+            console.log("squares[moveIndex] = " + squares[moveIndex]);
+            console.log("if for [1, 0] fired pushing" + [1, squares[moveIndex]]);
         }
         else if (evaluated[0] === 1 && evaluated[1] === 1) {
-            moveIndex = arrayToEval[1].indexOf(0);
-            potentialMovesArr.push([0, compSquares[moveIndex]]);
-            console.log("if for [1, 1] fired pushing" + [0, compSquares[moveIndex]]);
+            moveIndex = allMoves.indexOf(0);
+            potentialMovesArr.push([0, squares[moveIndex]]);
+            console.log("if for [1, 1] fired pushing" + [0, squares[moveIndex]]);
         }
         else{
             console.log("no ifs fired");
@@ -201,6 +204,9 @@ function checkWin(movesArray) {
         document.getElementById("square 4").style.backgroundColor = winBackground;
         document.getElementById("square 6").style.backgroundColor = winBackground;
         resetGame();
+    }else if (humanMoves.reduce(add, 0) + compMoves.reduce(add, 0) === 9){
+        alert("The only way to win is not to play");
+        location.reload();
     } else {
         return false;
     }
