@@ -54,37 +54,33 @@ function compMove() {
 
     var potentialMovesArr = [];
 
-        evaluateRow(0, 1, 2);
-        evaluateRow(3, 4, 5);
-        evaluateRow(6, 7, 8);
-        evaluateRow(0, 3, 6);
-        evaluateRow(1, 4, 7);
-        evaluateRow(2, 5, 8);
-        evaluateRow(0, 4, 8);
-        evaluateRow(2, 4, 6);
+    evaluateRow(0, 1, 2);
+    evaluateRow(3, 4, 5);
+    evaluateRow(6, 7, 8);
+    evaluateRow(0, 3, 6);
+    evaluateRow(1, 4, 7);
+    evaluateRow(2, 5, 8);
+    evaluateRow(0, 4, 8);
+    evaluateRow(2, 4, 6);
 
     console.log("potential moves = " + potentialMovesArr);
     /* array flattening function. Not required but I might put it back in if I update the game
-    function steamrollArray(arr) {
-
-        // I'm a steamroller, baby
-        var newArr = [];
-
-        function flatten(arr) {
-            for (var i = 0; i < arr.length; i++) {
-                if (Array.isArray(arr[i]) === true) {
-                    flatten(arr[i]);
-                } else {
-                    newArr.push(arr[i]);
-                }
-            }
-
-        }
-
-        flatten(arr);
-        return newArr;
-    }
-*/
+     function steamrollArray(arr) {
+     // I'm a steamroller, baby
+     var newArr = [];
+     function flatten(arr) {
+     for (var i = 0; i < arr.length; i++) {
+     if (Array.isArray(arr[i]) === true) {
+     flatten(arr[i]);
+     } else {
+     newArr.push(arr[i]);
+     }
+     }
+     }
+     flatten(arr);
+     return newArr;
+     }
+     */
     function sortFunction(a, b) {
         if (a[0] === b[0]) {
             return 0;
