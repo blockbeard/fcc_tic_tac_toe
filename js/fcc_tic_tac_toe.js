@@ -2,7 +2,6 @@
  * Created by chris_000 on 16/07/2016.
  */
 // build a tic tac toe game
-//TODO I can play a game of tic tac toe with the computer
 
 var playerChoice,
     compChoice,
@@ -12,11 +11,11 @@ var playerChoice,
 // the main game function. Choice is X or O from an onclick event to start.
 function chooseYourWeapon(selected) {
     if (selected == "X") {
-        playerChoice = "X";
-        compChoice = "O";
+        playerChoice = "<img src='x-mark.png' alt='X' style='width:100%; height:100%'>";
+        compChoice = "<img src='o-mark.png' alt='O' style='width:100%; height:100%'>";
     } else {
-        playerChoice = "O";
-        compChoice = "X";
+        playerChoice = "<img src='o-mark.png' style='width:100%; height:100%'>";
+        compChoice = "<img src='x-mark.png' style='width:100%; height:100%'>";
     }
 }
 
@@ -65,7 +64,9 @@ function compMove() {
         evaluateRow(2, 4, 6);
 
     console.log("potential moves = " + potentialMovesArr);
+    /* array flattening function. Not required but I might put it back in if I update the game
     function steamrollArray(arr) {
+
         // I'm a steamroller, baby
         var newArr = [];
 
@@ -83,7 +84,7 @@ function compMove() {
         flatten(arr);
         return newArr;
     }
-
+*/
     function sortFunction(a, b) {
         if (a[0] === b[0]) {
             return 0;
@@ -205,8 +206,8 @@ function checkWin(movesArray) {
         document.getElementById("square 6").style.backgroundColor = winBackground;
         resetGame();
     }else if (humanMoves.reduce(add, 0) + compMoves.reduce(add, 0) === 9){
-        alert("The only way to win is not to play");
-        location.reload();
+        $('#drawModal').modal();
+        resetGame();
     } else {
         return false;
     }
