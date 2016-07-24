@@ -11,11 +11,11 @@ var playerChoice,
 // the main game function. Choice is X or O from an onclick event to start.
 function chooseYourWeapon(selected) {
     if (selected == "X") {
-        playerChoice = "<img src='x-mark.png' alt='X' style='width:100%; height:100%'>";
-        compChoice = "<img src='o-mark.png' alt='O' style='width:100%; height:100%'>";
+        playerChoice = "<img src='img/x-mark.png' alt='X' style='width:100%; height:100%'>";
+        compChoice = "<img src='img/o-mark.png' alt='O' style='width:100%; height:100%'>";
     } else {
-        playerChoice = "<img src='o-mark.png' style='width:100%; height:100%'>";
-        compChoice = "<img src='x-mark.png' style='width:100%; height:100%'>";
+        playerChoice = "<img src='img/o-mark.png' style='width:100%; height:100%'>";
+        compChoice = "<img src='img/x-mark.png' style='width:100%; height:100%'>";
     }
 }
 
